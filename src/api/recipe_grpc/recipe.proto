@@ -1,0 +1,15 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = "github.com/Faurby/Recibag/src/api/recipe_grpc;recipe_grpc";
+
+service RecipeHandler {
+    rpc SayHello (google.protobuf.Empty) returns (HelloReply) {}
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloReply {
+    string message = 1;
+}
