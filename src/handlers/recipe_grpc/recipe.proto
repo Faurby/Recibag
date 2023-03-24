@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "github.com/Faurby/Recibag/src/api/recipe_grpc;recipe_grpc";
+option go_package = "github.com/Faurby/Recibag/src/models/recipe_grpc;recipe_grpc";
 
 service RecipeHandler {
     rpc GetRecipe (RecipeRequest) returns (Recipe) {};

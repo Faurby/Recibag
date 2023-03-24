@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.6.1
-// source: src/api/recipe_grpc/recipe.proto
+// source: src/handlers/recipe_grpc/recipe.proto
 
 package recipe_grpc
 
@@ -101,5 +101,5 @@ var RecipeHandler_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "src/api/recipe_grpc/recipe.proto",
+	Metadata: "src/handlers/recipe_grpc/recipe.proto",
 }
