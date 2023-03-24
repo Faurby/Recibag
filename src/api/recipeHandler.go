@@ -13,13 +13,12 @@ import (
 
 type server struct {
 	pb.UnimplementedRecipeHandlerServer
-	recipeUsecase usecase.RecipeUsecase
+	recipeUsecase usecase.RecipeUsecases
 }
 
-// Depends on the interface 'RecipeUsecase' from the usecase package.
-func NewRecipeHandlerServer(gserver *grpc.Server, recipeUsecase usecase.RecipeUsecase) {
-	// Create a new recipe server with the recipe usecase and register it to the gRPC server.
-	recipeServer := &server{recipeUsecase: recipeUsecase}
+// Depends on the interface 'RecipeUsecases' from the usecase package.
+func NewRecipeHandlerServer(gserver *grpc.Server, r usecase.RecipeUsecases) {
+	recipeServer := &server{recipeUsecase: r}
 	pb.RegisterRecipeHandlerServer(gserver, recipeServer)
 
 	// Register reflection service on gRPC server. This is needed for the grpcurl tool.

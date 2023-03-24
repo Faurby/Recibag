@@ -7,12 +7,12 @@ import (
 	"github.com/Faurby/Recibag/src/repository"
 )
 
-type RecipeUsecase interface {
+type RecipeUsecases interface {
 	GetRecipe(name string) (*models.Recipe, error)
 }
 
 type recipeUsecase struct {
-	recipeRepo repository.RecipeRepository
+	recipeRepo repository.IRecipeRepository
 }
 
 var chickenRecipe = &models.Recipe{
@@ -37,7 +37,7 @@ var chickenRecipe = &models.Recipe{
 	},
 }
 
-func NewRecipeUsecase(r repository.RecipeRepository) RecipeUsecase {
+func NewRecipeUsecase(r repository.IRecipeRepository) RecipeUsecases {
 	return &recipeUsecase{r}
 }
 
