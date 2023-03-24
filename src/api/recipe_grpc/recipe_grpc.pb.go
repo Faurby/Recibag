@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RecipeHandlerClient interface {
-	SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
+	GetRecipe(ctx context.Context, in *RecipeRequest, opts ...grpc.CallOption) (*Recipe, error)
 }
 
 type recipeHandlerClient struct {
@@ -33,9 +33,9 @@ func NewRecipeHandlerClient(cc grpc.ClientConnInterface) RecipeHandlerClient {
 	return &recipeHandlerClient{cc}
 }
 
-func (c *recipeHandlerClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
-	out := new(HelloReply)
-	err := c.cc.Invoke(ctx, "/RecipeHandler/SayHello", in, out, opts...)
+func (c *recipeHandlerClient) GetRecipe(ctx context.Context, in *RecipeRequest, opts ...grpc.CallOption) (*Recipe, error) {
+	out := new(Recipe)
+	err := c.cc.Invoke(ctx, "/RecipeHandler/GetRecipe", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *recipeHandlerClient) SayHello(ctx context.Context, in *HelloRequest, op
 // All implementations must embed UnimplementedRecipeHandlerServer
 // for forward compatibility
 type RecipeHandlerServer interface {
-	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
+	GetRecipe(context.Context, *RecipeRequest) (*Recipe, error)
 	mustEmbedUnimplementedRecipeHandlerServer()
 }
 
@@ -54,8 +54,8 @@ type RecipeHandlerServer interface {
 type UnimplementedRecipeHandlerServer struct {
 }
 
-func (UnimplementedRecipeHandlerServer) SayHello(context.Context, *HelloRequest) (*HelloReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedRecipeHandlerServer) GetRecipe(context.Context, *RecipeRequest) (*Recipe, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecipe not implemented")
 }
 func (UnimplementedRecipeHandlerServer) mustEmbedUnimplementedRecipeHandlerServer() {}
 
@@ -70,20 +70,20 @@ func RegisterRecipeHandlerServer(s grpc.ServiceRegistrar, srv RecipeHandlerServe
 	s.RegisterService(&RecipeHandler_ServiceDesc, srv)
 }
 
-func _RecipeHandler_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
+func _RecipeHandler_GetRecipe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RecipeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RecipeHandlerServer).SayHello(ctx, in)
+		return srv.(RecipeHandlerServer).GetRecipe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/RecipeHandler/SayHello",
+		FullMethod: "/RecipeHandler/GetRecipe",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RecipeHandlerServer).SayHello(ctx, req.(*HelloRequest))
+		return srv.(RecipeHandlerServer).GetRecipe(ctx, req.(*RecipeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var RecipeHandler_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RecipeHandlerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _RecipeHandler_SayHello_Handler,
+			MethodName: "GetRecipe",
+			Handler:    _RecipeHandler_GetRecipe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

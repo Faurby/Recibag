@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"github.com/Faurby/Recibag/src/api"
+	"github.com/Faurby/Recibag/src/usecase"
 	"google.golang.org/grpc"
 )
 
@@ -15,7 +16,9 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	api.NewRecipeHandlerServer(s)
+	ru := usecase.NewRecipeUsecase(nil)
+
+	api.NewRecipeHandlerServer(s, ru)
 	log.Printf("server listening at %v", lis.Addr())
 
 	err = s.Serve(lis)
